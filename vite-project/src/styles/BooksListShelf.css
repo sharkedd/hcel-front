@@ -1,0 +1,145 @@
+/* ======== Página general ======== */
+.shelf-page {
+  min-height: 100vh;
+  background-color: var(--color-paper);
+  padding: 3rem 2rem;
+}
+
+.shelf-title {
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 2.6rem;
+  color: var(--color-ink);
+  margin-bottom: 3rem;
+}
+
+/* ======== Grilla de libros ======== */
+.shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ======== Tarjeta de libro ======== */
+.shelf-book {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ======== Portada estilo libro físico ======== */
+.shelf-book-cover {
+  width: 160px;
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 6px;
+  border: 3px solid var(--color-accent);
+  box-shadow: 0 8px 15px rgba(44, 24, 16, 0.25);
+  position: relative;
+  display: flex;
+  align-items: center; /* <-- centrado vertical */
+  justify-content: center; /* <-- centrado horizontal */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  padding: 1rem;
+}
+
+/* ETIQUETA DE LIBRO ANTIGUO */
+.shelf-book-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  text-align: center;
+
+  /* Fondo tipo etiqueta */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 250, 240, 0.9),
+    rgba(250, 245, 230, 0.95)
+  );
+
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+
+  /* Marco dorado editorial */
+  border: 2px solid #b38b4d; /* dorado suave */
+  box-shadow: 0 2px 5px rgba(44, 24, 16, 0.25),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.4);
+
+  color: var(--color-ink);
+  position: relative;
+  z-index: 2;
+  line-height: 1.3;
+
+  max-width: 85%;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.shelf-book-cover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 25px rgba(44, 24, 16, 0.25);
+}
+
+/* ======== Título dentro de la portada ======== */
+.shelf-book-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  text-align: center;
+  color: var(--color-ink);
+  padding: 0.5rem;
+  line-height: 1.3;
+}
+
+/* ======== Pie de libro ======== */
+.shelf-book-footer {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  opacity: 0.8;
+}
+
+/* ======== Estado vacío ======== */
+.shelf-empty {
+  text-align: center;
+  font-size: 1.2rem;
+  opacity: 0.6;
+  grid-column: 1 / -1;
+}
+
+/* ======== Error ======== */
+.shelf-error {
+  text-align: center;
+  color: red;
+  margin-top: 2rem;
+}
+
+.back-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.85); /* Fondo editorial suave */
+  border: 2px solid var(--color-accent);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+
+  color: var(--color-ink);
+  transition: all 0.2s ease;
+  width: fit-content;
+
+  box-shadow: 0 3px 5px rgba(44, 24, 16, 0.15);
+}
+
+.back-arrow:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-color: var(--color-ink);
+  transform: translateX(-3px);
+}

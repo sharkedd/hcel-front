@@ -1,36 +1,33 @@
+/* ======== Página ======== */
 .story-page {
   min-height: 100vh;
   background-color: var(--color-paper);
   display: flex;
   justify-content: center;
-  padding: 3rem;
+  padding: 4rem 2rem;
 }
 
+/* ======== Tarjeta editorial ======== */
 .story-card {
   background: white;
-  padding: 3rem;
+  padding: 3rem 3rem;
   border-radius: 1rem;
-  max-width: 700px;
+  max-width: 800px;
   width: 100%;
-  box-shadow: 0 20px 25px rgba(44, 24, 16, 0.1);
+  box-shadow: 0 25px 35px rgba(44, 24, 16, 0.15);
 }
 
+/* ======== Título ======== */
 .story-title {
   font-family: var(--font-serif);
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   color: var(--color-ink);
-  margin-bottom: 2rem;
   text-align: center;
+  margin-bottom: 2rem;
 }
 
-.story-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-
-.story-input,
-.story-textarea {
+/* ======== Inputs ======== */
+.story-input {
   width: 100%;
   padding: 0.9rem 1rem;
   font-size: 1.1rem;
@@ -38,15 +35,37 @@
   border-radius: 0.5rem;
   background-color: #faf7f2;
   transition: border 0.2s, background 0.2s;
+  font-family: var(--font-sans);
 }
 
-.story-input:focus,
+.story-input:focus {
+  border-color: var(--color-accent);
+  background: white;
+  outline: none;
+}
+
+/* ======== Área de texto estilo libro ======== */
+.story-textarea {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.15rem;
+  border: 1px solid #d1c7b7;
+  border-radius: 0.5rem;
+  background: #fbf8f2;
+  min-height: 250px;
+  line-height: 1.7;
+  white-space: pre-line;
+  resize: vertical;
+  font-family: var(--font-serif);
+}
+
 .story-textarea:focus {
   border-color: var(--color-accent);
   background: white;
   outline: none;
 }
 
+/* ======== Botón general ======== */
 .story-btn {
   padding: 1rem;
   border: none;
@@ -56,26 +75,76 @@
   cursor: pointer;
   font-size: 1.1rem;
   transition: background 0.2s;
+  width: 100%;
+  margin-top: 1rem;
 }
 
 .story-btn:hover {
   background-color: #1a0f0a;
 }
 
+/* ======== Botón IA ======== */
 .story-btn.ia {
   background-color: #4b4bff;
+  margin-top: 0.5rem;
 }
 
 .story-btn.ia:hover {
   background-color: #3030cc;
 }
 
+/* ======== Mensajes ======== */
 .story-success {
-  color: green;
+  color: #2d7d2d;
   margin-top: 1rem;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .story-ia {
   color: #444;
   margin-top: 1rem;
+  text-align: center;
+}
+
+/* Espaciado general del formulario */
+.story-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Botón deshabilitado */
+.story-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Flecha de retorno */
+.back-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.85); /* Fondo editorial suave */
+  border: 2px solid var(--color-accent);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+
+  color: var(--color-ink);
+  transition: all 0.2s ease;
+  width: fit-content;
+
+  box-shadow: 0 3px 5px rgba(44, 24, 16, 0.15);
+}
+
+.back-arrow:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-color: var(--color-ink);
+  transform: translateX(-3px);
 }

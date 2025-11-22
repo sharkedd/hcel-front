@@ -3,18 +3,22 @@ import { useAuth } from "../context/AuthContext";
 import "../styles/CreateStory.css";
 
 export default function CreateStory() {
-  const { accessToken } = useAuth(); // ← CORREGIDO
+  const { accessToken } = useAuth();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [message, setMessage] = useState("");
   const [iaMessage, setIaMessage] = useState("");
+  const [loading, setLoading] = useState(false); // ← nuevo
 
   async function handleSave() {
+    if (loading) return; // ← evitar doble click
+    setLoading(true);
     setMessage("");
 
     if (!title || !content) {
       setMessage("Por favor completa todos los campos.");
+      setLoading(false);
       return;
     }
 
@@ -23,18 +27,20 @@ export default function CreateStory() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`, // ← CORRECTO
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({ title, content }),
       });
 
-      if (!response.ok) throw new Error("Error al crear la historia");
+      if (!response.ok) throw new Error("Error");
 
       setMessage("Historia creada con éxito 🎉");
       setTitle("");
       setContent("");
     } catch {
       setMessage("Error al guardar la historia");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -46,6 +52,14 @@ export default function CreateStory() {
   return (
     <div className="story-page">
       <div className="story-card">
+        {/* ← FLECHA DE REGRESO */}
+        <div
+          className="back-arrow"
+          onClick={() => (window.location.href = "/menu")}
+        >
+          ← Volver
+        </div>
+
         <h1 className="story-title">Crear Historia</h1>
 
         <div className="story-form">
@@ -59,14 +73,17 @@ export default function CreateStory() {
 
           <textarea
             className="story-textarea"
-            placeholder="Escribe aquí tu historia..."
+            placeholder="Escribe tu historia..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            rows={10}
           />
 
-          <button className="story-btn" onClick={handleSave}>
-            Guardar Historia
+          <button
+            className="story-btn"
+            onClick={handleSave}
+            disabled={loading} // ← botón deshabilitado
+          >
+            {loading ? "Guardando..." : "Guardar Historia"}
           </button>
 
           <button className="story-btn ia" onClick={handleIaEdit}>

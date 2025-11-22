@@ -54,3 +54,31 @@
   text-align: center;
   color: var(--color-ink);
 }
+
+.back-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.85); /* Fondo editorial suave */
+  border: 2px solid var(--color-accent);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+
+  color: var(--color-ink);
+  transition: all 0.2s ease;
+  width: fit-content;
+
+  box-shadow: 0 3px 5px rgba(44, 24, 16, 0.15);
+}
+
+.back-arrow:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-color: var(--color-ink);
+  transform: translateX(-3px);
+}

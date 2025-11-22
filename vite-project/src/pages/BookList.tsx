@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import "../styles/BooksList.css";
+import "../styles/BooksListShelf.css";
+import { getCoverTexture } from "../utils/bookTextures";
 
 interface Book {
   _id: string;
@@ -19,7 +20,7 @@ export default function BooksList() {
       try {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/books`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`, // CORRECTO
+            Authorization: `Bearer ${accessToken}`,
           },
         });
 
@@ -27,7 +28,7 @@ export default function BooksList() {
 
         const data = await res.json();
         setBooks(data);
-      } catch (err) {
+      } catch {
         setError("No se pudieron obtener los libros.");
       }
     }
@@ -35,32 +36,47 @@ export default function BooksList() {
     loadBooks();
   }, [accessToken]);
 
-  if (error) return <p className="books-error">{error}</p>;
+  if (error) return <p className="shelf-error">{error}</p>;
 
   return (
-    <div className="books-page">
-      <div className="books-card">
-        <h1 className="books-title">Mis Libros</h1>
+    <div className="shelf-page">
+      <div
+        className="back-arrow"
+        onClick={() => (window.location.href = "/menu")}
+      >
+        ← Volver
+      </div>
 
-        {books.length === 0 && (
-          <p className="books-empty">Aún no has creado historias.</p>
-        )}
+      <h1 className="shelf-title">Tu Biblioteca</h1>
 
-        <ul className="books-list">
-          {books.map((book) => (
-            <li
-              key={book._id}
-              className="books-item"
-              onClick={() => (window.location.href = `/books/${book._id}`)}
+      <div className="shelf-grid">
+        {books.map((book) => (
+          <div
+            key={book._id}
+            className="shelf-book"
+            onClick={() => (window.location.href = `/books/${book._id}`)}
+          >
+            <div
+              className="shelf-book-cover"
+              style={{
+                backgroundImage: `url(${getCoverTexture(book._id)})`,
+              }}
             >
-              <strong className="books-item-title">{book.title}</strong>
-              <br />
-              <small className="books-item-date">
-                {new Date(book.createdAt).toLocaleDateString()}
+              <div className="shelf-book-title">{book.title}</div>
+            </div>
+
+            <div className="shelf-book-footer">
+              <small>
+                {new Date(book.createdAt).toLocaleDateString("es-ES")}
               </small>
-            </li>
-          ))}
-        </ul>
+            </div>
+          </div>
+        ))}
+
+        {/* Si está vacío */}
+        {books.length === 0 && (
+          <p className="shelf-empty">Aún no hay libros en tu biblioteca.</p>
+        )}
       </div>
     </div>
   );

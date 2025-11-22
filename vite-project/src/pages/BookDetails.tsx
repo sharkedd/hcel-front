@@ -24,7 +24,7 @@ interface User {
 
 export default function BookDetails() {
   const { id } = useParams();
-  const { accessToken } = useAuth(); // ← CORREGIDO
+  const { accessToken } = useAuth();
 
   const [book, setBook] = useState<BookFull | null>(null);
   const [user, setUser] = useState<User | null>(null);
@@ -36,7 +36,7 @@ export default function BookDetails() {
         const res = await fetch(
           `${import.meta.env.VITE_API_URL}/books/${id}/full`,
           {
-            headers: { Authorization: `Bearer ${accessToken}` }, // ← CORRECTO
+            headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
 
@@ -68,6 +68,14 @@ export default function BookDetails() {
   return (
     <div className="book-page">
       <div className="book-card">
+        {/* ← FLECHA DE REGRESO */}
+        <div
+          className="back-arrow"
+          onClick={() => (window.location.href = "/books")}
+        >
+          ← Volver
+        </div>
+
         <h1 className="book-title">{book.title}</h1>
 
         <p className="book-author">
