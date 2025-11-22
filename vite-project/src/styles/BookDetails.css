@@ -1,0 +1,56 @@
+.book-page {
+  min-height: 100vh;
+  background-color: var(--color-paper);
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+
+.book-card {
+  max-width: 800px;
+  background: white;
+  padding: 3rem 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 25px 35px rgba(44, 24, 16, 0.15);
+}
+
+.book-title {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  color: var(--color-ink);
+  margin-bottom: 1rem;
+}
+
+.book-author {
+  font-size: 1.1rem;
+  color: var(--color-ink);
+}
+
+.book-date {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-bottom: 1.2rem;
+}
+
+.book-separator {
+  margin: 2rem 0;
+  border: none;
+  border-top: 2px solid var(--color-accent);
+}
+
+.book-content {
+  white-space: pre-line;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--color-text);
+}
+
+.book-error {
+  color: red;
+  text-align: center;
+}
+
+.book-loading {
+  text-align: center;
+  color: var(--color-ink);
+}

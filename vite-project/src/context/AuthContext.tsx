@@ -8,9 +8,11 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
-  token: string | null;
-  login: (user: User, token: string) => void;
+  accessToken: string | null;
+  refreshToken: string | null;
+  login: (user: User, accessToken: string, refreshToken: string) => void;
   logout: () => void;
+  setAccessToken: (value: string) => void;
   loading: boolean;
 }
 
@@ -18,38 +20,64 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+  const [accessToken, setAccessTokenState] = useState<string | null>(null);
+  const [refreshToken, setRefreshTokenState] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // cargar localStorage en la primera carga
+  // cargar desde localStorage al inicio
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
+    const storedAccess = localStorage.getItem("accessToken");
+    const storedRefresh = localStorage.getItem("refreshToken");
 
-    if (storedToken && storedUser) {
-      setToken(storedToken);
+    if (storedUser && storedAccess && storedRefresh) {
       setUser(JSON.parse(storedUser));
+      setAccessTokenState(storedAccess);
+      setRefreshTokenState(storedRefresh);
     }
 
     setLoading(false);
   }, []);
 
-  const login = (user: User, token: string) => {
+  const login = (user: User, accessToken: string, refreshToken: string) => {
     setUser(user);
-    setToken(token);
-    localStorage.setItem("token", token);
+    setAccessTokenState(accessToken);
+    setRefreshTokenState(refreshToken);
+
     localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
   };
 
   const logout = () => {
     setUser(null);
-    setToken(null);
-    localStorage.removeItem("token");
+    setAccessTokenState(null);
+    setRefreshTokenState(null);
+
     localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+
+    window.location.href = "/";
+  };
+
+  const setAccessToken = (value: string) => {
+    setAccessTokenState(value);
+    localStorage.setItem("accessToken", value);
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        accessToken,
+        refreshToken,
+        login,
+        logout,
+        setAccessToken,
+        loading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

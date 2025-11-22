@@ -1,57 +1,127 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { loginRequest } from "../services/auth";
+import { BookOpen, Feather, ArrowRight } from "lucide-react";
 
 export default function Login() {
-  const { token, login, loading } = useAuth();
+  const { accessToken, login, loading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // si ya hay token → ir al menú
+  // Redirigir si ya hay token
   useEffect(() => {
-    if (token) {
+    if (accessToken) {
       window.location.href = "/menu";
     }
-  }, [token]);
+  }, [accessToken]);
 
-  if (loading) return <p>Cargando...</p>;
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setIsLoading(true);
 
-  async function handleLogin() {
     try {
       const data = await loginRequest(email, password);
 
-      login(data.user, data.accessToken);
-      // redirige automáticamente por el useEffect
+      // login correcto según tu AuthContext
+      login(data.user, data.accessToken, data.refreshToken);
     } catch (err) {
-      setError("Credenciales incorrectas");
+      setError("Credenciales inválidas. Por favor, inténtalo de nuevo.");
+    } finally {
+      setIsLoading(false);
     }
   }
 
+  if (loading) return <p>Cargando...</p>;
+
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto" }}>
-      <h1>Login</h1>
+    <div className="login-container">
+      <div className="login-wrapper">
+        {/* DECORACIÓN */}
+        <div className="login-decoration">
+          <div className="decoration-content">
+            <div className="brand-logo">
+              <BookOpen size={48} strokeWidth={1.5} />
+            </div>
+            <h1>Historias Convertidas en Libros</h1>
+            <p>
+              "La memoria es el único paraíso del que no podemos ser
+              expulsados."
+              <br />
+              <span className="quote-author">— Jean Paul</span>
+            </p>
+            <div className="decoration-footer">
+              <Feather className="feather-icon" />
+              <span>Preservando tu legado</span>
+            </div>
+          </div>
+          <div className="overlay-pattern"></div>
+        </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <input
-          type="email"
-          value={email}
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        {/* FORMULARIO */}
+        <div className="login-form-section">
+          <div className="form-content">
+            <div className="form-header">
+              <h2>Bienvenido de nuevo</h2>
+              <p>
+                Ingresa tus credenciales para continuar escribiendo tu historia
+              </p>
+            </div>
 
-        <input
-          type="password"
-          value={password}
-          placeholder="Contraseña"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+            <form onSubmit={handleSubmit} className="auth-form">
+              {error && <div className="error-message">{error}</div>}
 
-        <button type="button" onClick={handleLogin}>
-          Ingresar
-        </button>
+              <div className="form-group">
+                <label htmlFor="email">Correo Electrónico</label>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="tu@email.com"
+                  required
+                  className="form-input"
+                />
+              </div>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+              <div className="form-group">
+                <label htmlFor="password">Contraseña</label>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  className="form-input"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className={`submit-btn ${isLoading ? "loading" : ""}`}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  "Iniciando sesión..."
+                ) : (
+                  <>
+                    Ingresar <ArrowRight size={18} />
+                  </>
+                )}
+              </button>
+            </form>
+
+            <div className="form-footer">
+              <p>
+                ¿Aún no tienes una cuenta?{" "}
+                <a href="/register">Comienza tu legado</a>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

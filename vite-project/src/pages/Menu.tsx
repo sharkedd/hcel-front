@@ -1,24 +1,33 @@
 import { useAuth } from "../context/AuthContext";
+import "../styles/Menu.css";
 
 export default function Menu() {
   const { user, logout } = useAuth();
 
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto" }}>
-      <h1>Menú Principal</h1>
-      <p>Hola, {user?.email}</p>
+    <div className="menu-container">
+      <div className="menu-card">
+        <h1 className="menu-title">Menú Principal</h1>
+        <p className="menu-subtitle">Hola, {user?.email}</p>
 
-      <button onClick={() => (window.location.href = "/books")}>
-        Ver todos los libros
-      </button>
+        <button
+          className="menu-button"
+          onClick={() => (window.location.href = "/books")}
+        >
+          Ver todos los libros
+        </button>
 
-      <button onClick={() => (window.location.href = "/crear")}>
-        Crear historia
-      </button>
+        <button
+          className="menu-button"
+          onClick={() => (window.location.href = "/crear")}
+        >
+          Crear historia
+        </button>
 
-      <button onClick={logout} style={{ marginTop: "30px" }}>
-        Cerrar sesión
-      </button>
+        <button className="menu-button logout-button" onClick={logout}>
+          Cerrar sesión
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,270 @@
+/* Importar fuente elegante */
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap");
+
+:root {
+  --color-bg: #fdfbf7; /* Color papel antiguo suave */
+  --color-paper: #f4f1ea; /* Color pergamino */
+  --color-ink: #2c1810; /* Tinta café oscuro */
+  --color-accent: #8b5e3c; /* Cuero */
+  --color-text: #4a4a4a; /* Gris suave para lectura */
+  --color-error-bg: #fee2e2;
+  --color-error-text: #991b1b;
+  --font-serif: "Libre Baskerville", serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Layout Principal */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: var(--color-paper);
+}
+
+.login-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 600px;
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(44, 24, 16, 0.1),
+    0 10px 10px -5px rgba(44, 24, 16, 0.04);
+}
+
+/* Sección Decorativa (Izquierda) */
+.login-decoration {
+  flex: 1;
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem;
+  overflow: hidden;
+}
+
+/* Patrón de fondo sutil */
+.overlay-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(
+    circle at 2px 2px,
+    rgba(255, 255, 255, 0.1) 1px,
+    transparent 0
+  );
+  background-size: 30px 30px;
+  opacity: 0.3;
+}
+
+.decoration-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+}
+
+.brand-logo {
+  margin-bottom: 2rem;
+  color: var(--color-accent);
+  display: flex;
+  justify-content: center;
+}
+
+.decoration-content h1 {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.decoration-content p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.quote-author {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  font-style: normal;
+  color: var(--color-accent);
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.decoration-footer {
+  margin-top: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  opacity: 0.6;
+  letter-spacing: 0.05em;
+}
+
+/* Sección del Formulario (Derecha) */
+.login-form-section {
+  flex: 1;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+}
+
+.form-content {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-header {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.form-header h2 {
+  font-family: var(--font-serif);
+  color: var(--color-ink);
+  font-size: 1.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-header p {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s;
+  background-color: #fafafa;
+  box-sizing: border-box; /* Importante para que el padding no rompa el ancho */
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(139, 94, 60, 0.1);
+}
+
+.error-message {
+  background-color: var(--color-error-bg);
+  color: var(--color-error-text);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.875rem;
+  background-color: var(--color-ink);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #1a0f0a;
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.form-footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.form-footer a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .login-wrapper {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .login-decoration {
+    padding: 2rem;
+    min-height: 200px;
+  }
+
+  .brand-logo {
+    margin-bottom: 1rem;
+  }
+
+  .decoration-content h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .decoration-content p,
+  .decoration-footer {
+    display: none; /* Simplificar en móvil */
+  }
+
+  .login-form-section {
+    padding: 2rem 1.5rem;
+  }
+}

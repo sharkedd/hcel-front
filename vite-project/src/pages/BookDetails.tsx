@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import "../styles/BookDetails.css";
 
 interface BookContent {
   _id: string;
@@ -23,7 +24,7 @@ interface User {
 
 export default function BookDetails() {
   const { id } = useParams();
-  const { token } = useAuth();
+  const { accessToken } = useAuth(); // ← CORREGIDO
 
   const [book, setBook] = useState<BookFull | null>(null);
   const [user, setUser] = useState<User | null>(null);
@@ -35,7 +36,7 @@ export default function BookDetails() {
         const res = await fetch(
           `${import.meta.env.VITE_API_URL}/books/${id}/full`,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: `Bearer ${accessToken}` }, // ← CORRECTO
           }
         );
 
@@ -44,11 +45,10 @@ export default function BookDetails() {
         const data = await res.json();
         setBook(data);
 
-        // Buscar el autor
         const userRes = await fetch(
           `${import.meta.env.VITE_API_URL}/users/by-id/${data.createdBy}`,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
 
@@ -60,28 +60,28 @@ export default function BookDetails() {
     }
 
     loadBook();
-  }, []);
+  }, [accessToken, id]);
 
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
-  if (!book) return <p>Cargando libro...</p>;
+  if (error) return <p className="book-error">{error}</p>;
+  if (!book) return <p className="book-loading">Cargando libro...</p>;
 
   return (
-    <div style={{ maxWidth: "700px", margin: "40px auto" }}>
-      <h1>{book.title}</h1>
+    <div className="book-page">
+      <div className="book-card">
+        <h1 className="book-title">{book.title}</h1>
 
-      <p>
-        <strong>Autor:</strong> {user ? user.name : "Desconocido"}
-      </p>
+        <p className="book-author">
+          <strong>Autor:</strong> {user ? user.name : "Desconocido"}
+        </p>
 
-      <p>
-        <small>Fecha: {new Date(book.createdAt).toLocaleDateString()}</small>
-      </p>
+        <p className="book-date">
+          {new Date(book.createdAt).toLocaleDateString()}
+        </p>
 
-      <hr />
+        <hr className="book-separator" />
 
-      <p style={{ whiteSpace: "pre-line", marginTop: "20px" }}>
-        {book.content.body}
-      </p>
+        <p className="book-content">{book.content.body}</p>
+      </div>
     </div>
   );
 }

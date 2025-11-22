@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import "../styles/BooksList.css";
 
 interface Book {
   _id: string;
@@ -9,7 +10,7 @@ interface Book {
 }
 
 export default function BooksList() {
-  const { token } = useAuth();
+  const { accessToken } = useAuth();
   const [books, setBooks] = useState<Book[]>([]);
   const [error, setError] = useState("");
 
@@ -18,7 +19,7 @@ export default function BooksList() {
       try {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/books`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${accessToken}`, // CORRECTO
           },
         });
 
@@ -32,36 +33,35 @@ export default function BooksList() {
     }
 
     loadBooks();
-  }, []);
+  }, [accessToken]);
 
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (error) return <p className="books-error">{error}</p>;
 
   return (
-    <div style={{ maxWidth: "600px", margin: "40px auto" }}>
-      <h1>Mis Libros</h1>
+    <div className="books-page">
+      <div className="books-card">
+        <h1 className="books-title">Mis Libros</h1>
 
-      {books.length === 0 && <p>No hay libros aún.</p>}
+        {books.length === 0 && (
+          <p className="books-empty">Aún no has creado historias.</p>
+        )}
 
-      <ul style={{ marginTop: "20px", padding: 0, listStyle: "none" }}>
-        {books.map((book) => (
-          <li
-            key={book._id}
-            style={{
-              padding: "12px",
-              border: "1px solid #ccc",
-              marginBottom: "12px",
-              cursor: "pointer",
-            }}
-            onClick={() => (window.location.href = `/books/${book._id}`)}
-          >
-            <strong>{book.title}</strong>
-            <br />
-            <small>
-              Fecha: {new Date(book.createdAt).toLocaleDateString()}
-            </small>
-          </li>
-        ))}
-      </ul>
+        <ul className="books-list">
+          {books.map((book) => (
+            <li
+              key={book._id}
+              className="books-item"
+              onClick={() => (window.location.href = `/books/${book._id}`)}
+            >
+              <strong className="books-item-title">{book.title}</strong>
+              <br />
+              <small className="books-item-date">
+                {new Date(book.createdAt).toLocaleDateString()}
+              </small>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

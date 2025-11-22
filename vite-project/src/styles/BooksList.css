@@ -1,0 +1,71 @@
+.books-page {
+  min-height: 100vh;
+  background-color: var(--color-paper); /* Igual que el login y el menú */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.books-card {
+  background: white;
+  padding: 3rem 2.5rem;
+  width: 100%;
+  max-width: 700px;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(44, 24, 16, 0.1),
+    0 10px 10px -5px rgba(44, 24, 16, 0.04);
+}
+
+.books-title {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  color: var(--color-ink);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.books-empty {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--color-text);
+  opacity: 0.8;
+}
+
+.books-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.books-item {
+  padding: 1.2rem 1.4rem;
+  border: 2px solid var(--color-accent);
+  border-radius: 0.75rem;
+  margin-bottom: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: var(--color-paper);
+}
+
+.books-item:hover {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+  border-color: var(--color-ink);
+}
+
+.books-item-title {
+  font-size: 1.3rem;
+  font-family: var(--font-serif);
+}
+
+.books-item-date {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.books-error {
+  color: red;
+  text-align: center;
+  font-size: 1.2rem;
+}
