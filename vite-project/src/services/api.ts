@@ -27,7 +27,7 @@ async function refreshAccessToken(): Promise<string | null> {
 
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/auth/refresh`,
+      `${import.meta.env.VITE_API_URL}/auth/refresh-token`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -41,8 +41,13 @@ async function refreshAccessToken(): Promise<string | null> {
     }
 
     const data = await response.json();
+
+    // El backend debe devolver accessToken como string
     const newAccessToken = data.accessToken as string;
+
+    // Guardar el nuevo token
     setAccessTokenGlobal(newAccessToken);
+
     return newAccessToken;
   } catch (err) {
     logoutGlobal();
@@ -74,7 +79,7 @@ export async function apiFetch<T = any>(
   // Primer intento
   let response = await doFetch(token);
 
-  // Si responde 401, intentamos refrescar token
+  // Si responde 401 → refrescar token
   if (response.status === 401) {
     const newToken = await refreshAccessToken();
     if (!newToken) {

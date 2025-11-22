@@ -8,12 +8,12 @@ export default function Menu() {
       <h1>Menú Principal</h1>
       <p>Hola, {user?.email}</p>
 
-      <button onClick={() => (window.location.href = "/historias")}>
-        Ver historias
+      <button onClick={() => (window.location.href = "/books")}>
+        Ver todos los libros
       </button>
 
-      <button onClick={() => (window.location.href = "/escribir")}>
-        Escribir historia
+      <button onClick={() => (window.location.href = "/crear")}>
+        Crear historia
       </button>
 
       <button onClick={logout} style={{ marginTop: "30px" }}>

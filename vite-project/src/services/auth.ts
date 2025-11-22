@@ -1,5 +1,6 @@
 export interface LoginResponse {
   accessToken: string;
+  refreshToken: string;
   user: {
     id: string;
     email: string;
@@ -8,15 +9,13 @@ export interface LoginResponse {
 }
 
 export async function loginRequest(email: string, password: string) {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/users/login`, {
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/users/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
 
-  if (!response.ok) {
-    throw new Error("Credenciales inválidas");
-  }
+  if (!res.ok) throw new Error("Credenciales incorrectas");
 
-  return response.json() as Promise<LoginResponse>;
+  return res.json() as Promise<LoginResponse>;
 }
